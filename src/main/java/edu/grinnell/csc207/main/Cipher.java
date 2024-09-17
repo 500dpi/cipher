@@ -83,57 +83,51 @@ public class Cipher {
       type = encOrDec(args[i], type, counter);
       arguments = getArgs(args, counter);
     } // end finding the arguments and assigning them values.
-    pen.printf("counter = %d\n", args.length);
-    pen.printf("argument 1: %s, argument 2: %s\n", arguments[0], arguments[1]);
-    pen.printf("method = %d\n", method);
-    pen.printf("type = %d\n", type);
     if (args.length < 4) {
-      if (arguments[1] == null && arguments[0] == null) {
-        arguments[1] = null;
-      } else {
-        switch (method) {
-          case 1:
-            if (arguments[1] != null) {
-              char ch = arguments[1].charAt(0);
-              String str = arguments[0];
-              if (arguments[1].length() > 1) {
-                System.err.println("Error: Caesar ciphers require a one-character key.");
-              } // print error if argument has no key.
-              if (type == 1) {
-                output = CipherUtils.caesarEncrypt(str, ch);
-                pen.printf("%s\n", output);
-              } else if (type == 2) {
-                output = CipherUtils.caesarDecrypt(str, ch);
-                pen.printf("%s\n", output);
-              } else {
-                System.err.println("Error: No valid action specified. Legal values are" 
-                                  + " \"-encode\" and \"-decode\"");
-              } // if type is 1 or 2 call method.
-            } else if (arguments[1] == null) {
+      System.err.println("Error: Expected 4 parameters, received " + args.length);
+    } else {
+      switch (method) {
+        case 1:
+          if (arguments[1] != null) {
+            char ch = arguments[1].charAt(0);
+            String str = arguments[0];
+            if (arguments[1].length() > 1) {
               System.err.println("Error: Caesar ciphers require a one-character key.");
-            } break;
-          case 2:
-            if (arguments[1] != null) {
-              if (type == 1) {
-                output = CipherUtils.vigenereEncrypt(arguments[0], arguments[1]);
-                pen.printf("%s\n", output);
-              } else if (type == 2) {
-                output = CipherUtils.vigenereDecrypt(arguments[0], arguments[1]);
-                pen.printf("%s\n", output);
-              } else {
-                System.err.println("Error: No valid action specified. Legal values are"
-                                  + " \"-encode\" and \"-decode\"");
-              } // if type is 1 or 2 call method.
-            } else if (arguments[1] == null) {
-              System.err.println("Error: Empty keys are not permitted");
+            } // print error if argument has no key.
+            if (type == 1) {
+              output = CipherUtils.caesarEncrypt(str, ch);
+              pen.printf("%s\n", output);
+            } else if (type == 2) {
+              output = CipherUtils.caesarDecrypt(str, ch);
+              pen.printf("%s\n", output);
             } else {
-              System.err.println("Error: strings must be lowercase letters");
-            } // if arguments are null, print error.
-            break;
-            default:
-              System.err.println("Error: Expected 4 parameters, received " + args.length);
-        } // end switch statement to create & print ciphers.
-      } // end else execution.
+              System.err.println("Error: No valid action specified. Legal values are" 
+                                + " \"-encode\" and \"-decode\"");
+            } // if type is 1 or 2 call method.
+          } else if (arguments[1] == null) {
+            System.err.println("Error: Caesar ciphers require a one-character key.");
+          } break;
+        case 2:
+          if (arguments[1] != null) {
+            if (type == 1) {
+              output = CipherUtils.vigenereEncrypt(arguments[0], arguments[1]);
+              pen.printf("%s\n", output);
+            } else if (type == 2) {
+              output = CipherUtils.vigenereDecrypt(arguments[0], arguments[1]);
+              pen.printf("%s\n", output);
+            } else {
+              System.err.println("Error: No valid action specified. Legal values are"
+                                + " \"-encode\" and \"-decode\"");
+            } // if type is 1 or 2 call method.
+          } else if (arguments[1] == null) {
+              System.err.println("Error: Empty keys are not permitted");
+          } else {
+            System.err.println("Error: strings must be lowercase letters");
+          } // if arguments are null, print error.
+          break;
+          default:
+            System.err.println("Error: Expected 4 parameters, received " + args.length);
+      } // end switch statement to create & print ciphers.
     } // end number of arguments check.
   } // main(String[])
 } // class Cipher
