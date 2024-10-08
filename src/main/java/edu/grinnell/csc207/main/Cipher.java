@@ -1,12 +1,25 @@
+/*
+ * Cipher.java
+ * 
+ * Author: Sara Jaljaa
+ * Course: CSC-207-01
+ * 
+ */
+
 package edu.grinnell.csc207.main;
 
 import edu.grinnell.csc207.util.CipherUtils;
 import java.io.PrintWriter;
+
 /**
  * Contains general and helper methods to encrypt and decrypt
  * with CipherUtils methods.
+ * 
+ * @author Sara Jaljaa
+ *
  */
 public class Cipher {
+
   /**
    * Determines if string is encoded or decoded.
    *
@@ -26,6 +39,7 @@ public class Cipher {
     } // if string matches flags, set method to a number.
     return method;
   } // encOrDec(String,int,int)
+
   /**
    * Determines the cipher type (Vigenere or Caesar).
    *
@@ -45,7 +59,8 @@ public class Cipher {
     } // if string matches flags, set type to a number.
     return type;
   } // caeOrVig(String,int,int)
-/**
+
+  /**
    * Determines the arguments to the cipher methods entered in
    * the command line.
    *
@@ -65,6 +80,7 @@ public class Cipher {
     } // for the length of the string array find all non-flags.
     return newArg;
   } // getArgs(String[],int)
+
  /**
    * Creates a cipher based on command line arguments.
    *

@@ -1,28 +1,44 @@
+/*
+ * CipherUtils.java
+ * 
+ * Author: Sara Jaljaa
+ * Course: CSC-207-01
+ * 
+ */
+
 package edu.grinnell.csc207.util;
 
 /**
- * Contains general and helper functions to encrypt and decrypt
- * with Caesar or Vigenere ciphers.
+ * Helper functions to encrypt and decrypt with Caesar or
+ * Vigenere ciphers.
+ * 
+ * @author Sara Jaljaa
+ *
  */
 public class CipherUtils {
+
   /**
-   * Defines the start of the lowercase alphabet in ASCII.
+   * The ASCII value of lowercase a.
    */
   private static int alphStart = 97;
+
   /*
-   * Defines the end of the alphabet 0-26.
+   * The length of the alphabet.
    */
   private static int numStart = 26;
+
   /**
    * Convert from ASCII to numerical alphabetical order.
    *
    * @param letter The letter in ASCII form.
-   * @return The letter calibrated to the alphabet (0-25).
+   * @return The letter calibrated to its alphabetical position,
+   *         inclusive (0-25).
    */
   private static int letter2int(char letter) {
     int charToI = ((int) letter - alphStart);
     return charToI;
   } // letter2int(char)
+
   /**
    * Convert from numerical alphabetical order to ASCII value.
    *
@@ -122,6 +138,7 @@ public class CipherUtils {
     } // return else branch if key is not less than str.
     return new String(max);
   } // equalString(String,String)
+  
   /**
    * Encrypt a string using the Vigenere cipher and a
    * key.

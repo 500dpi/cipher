@@ -1,3 +1,11 @@
+/*
+ * AllCaesar.java
+ * 
+ * Author: Sara Jaljaa
+ * Course: CSC-207-01
+ * 
+ */
+
 package edu.grinnell.csc207.main;
 
 import edu.grinnell.csc207.util.CipherUtils;
@@ -6,6 +14,9 @@ import java.io.PrintWriter;
 /**
  * Prints and encrypted or decrypted string from a-z using the
  * Caesar cipher.
+ * 
+ * @author Sara Jaljaa
+ *
  */
 public class AllCaesar {
 /**

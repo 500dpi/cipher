@@ -802,6 +802,5 @@ public class TestMP01 {
   public void cipherEmptyKey() {
     cipherTest("E", new String[] { "-vigenere", "-decode", "h", "" }, null);
   } // cipherEmptyKey()
-
 } // TestMP01
 
