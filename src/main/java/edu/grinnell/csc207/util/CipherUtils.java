@@ -58,11 +58,11 @@ public class CipherUtils {
   public static boolean allLower(String arg) {
     boolean bool = false;
     for (int i = 0; i < arg.length(); i++) {
-      if (arg.charAt(i) < 'a' || arg.charAt(i) > 'z') {
+      if (arg.charAt(i) >= 'a' && arg.charAt(i) <= 'z') {
         bool = true;
-        break;
       } else {
         bool = false;
+        break;
       } // if the character is not lowercase.
     } return bool;
   } // allLower(String)
