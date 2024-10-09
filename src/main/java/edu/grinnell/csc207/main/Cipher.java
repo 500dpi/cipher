@@ -12,145 +12,115 @@ import edu.grinnell.csc207.util.CipherUtils;
 import java.io.PrintWriter;
 
 /**
- * Contains general and helper methods to encrypt and decrypt
- * with CipherUtils methods.
+ * Prints encrypted or decrypted Vigenere/Caesar ciphers.
  *
  * @author Sara Jaljaa
- *
  */
 public class Cipher {
 
   /**
-   * Required argument length.
+   * Compares a val to two strings + returns a boolean depending on
+   * if the string matches one of the values and has an empty
+   * String to later store the matching value.
+   *
+   * @param compareVal The string to compare to others.
+   * @param str1 The first string to compare with.
+   * @param str2 The second string to compare with.
+   * @param store An empty String variable.
+   * @return True if the strings are all the same and store is empty (null), else
+   *         false.
    */
-  private static final int ARG = 4;
+  public static boolean compareArg(String compareVal, String str1, String str2, String store) {
+    return ((compareVal.equals(str1) || compareVal.equals(str2)) && store == null);
+  } // compareArg(String, String, String, String)
 
   /**
-   * Determines if string is encoded or decoded.
-   *
-   * @param str Takes a string to encipher.
-   * @param method Changes to 1, 2, or 0 based on if it is
-   * meant to encrypt, decrypt, or no action.
-   * @param counter Counts the instances of the variable.
-   * @return The integer method of enciphering/deciphering.
+   * Required parameters to create a cipher.
    */
-  public static int encOrDec(String str, int method, int counter) {
-    if (str.equals("-encode")) {
-      method = 1;
-      counter++;
-    } else if (str.equals("-decode")) {
-      method = 2;
-      counter++;
-    } // if string matches flags, set method to a number.
-    return method;
-  } // encOrDec(String,int,int)
+  private static final int PARAMS = 4;
 
   /**
-   * Determines the cipher type (Vigenere or Caesar).
-   *
-   * @param str Takes a string to encipher.
-   * @param type Changes to 1, 2, or 0 based on if it is
-   * meant to caesar, vigenere, or no type.
-   * @param counter Counts the instances of the variable.
-   * @return The integer type of enciphering/deciphering.
-   */
-  public static int caeOrVig(String str, int type, int counter) {
-    if (str.equals("-caesar")) {
-      type = 1;
-      counter++;
-    } else if (str.equals("-vigenere")) {
-      type = 2;
-      counter++;
-    } // if string matches flags, set type to a number.
-    return type;
-  } // caeOrVig(String,int,int)
-
-  /**
-   * Determines the arguments to the cipher methods entered in
-   * the command line.
-   *
-   * @param arg String array of arguments from the command line.
-   * @param counter Counts the instances of the variable.
-   * @return A new string array with just the string and key to encipher/
-   * decipher with.
-   */
-  public static String[] getArgs(String[] arg, int counter) {
-    String[] newArg = new String[2];
-    for (int i = 0, j = 0; i < arg.length && j < 2; i++) {
-      if (arg[i].charAt(0) != '-') {
-        newArg[j] = arg[i];
-        j++;
-        counter++;
-      } // if arg doesn't have a flag, add it to the array.
-    } // for the length of the string array find all non-flags.
-    return newArg;
-  } // getArgs(String[],int)
-
- /**
    * Creates a cipher based on command line arguments.
    *
    * @param args Command line arguments to encode/decode,
    * the type of cipher (vigenere/caesar), the input string, and key.
    */
+  @SuppressWarnings("unused")
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
-    int type = 0;
-    int method = 0;
-    int counter = 0;
-    String[] arguments = new String[2];
-    String output;
+
+    // Variables to store parameters to cipher
+    String type = null;
+    String action = null;
+    String target = null;
+    String key = null;
+
+    if (args.length != PARAMS) {
+      System.err.println("Error: Expected 4 parameters, received: " + args.length);
+      return;
+    } // if
+
     for (int i = 0; i < args.length; i++) {
-      method = caeOrVig(args[i], method, counter);
-      type = encOrDec(args[i], type, counter);
-      arguments = getArgs(args, counter);
-    } // end finding the arguments and assigning them values.
-    if (args.length < ARG) {
-      System.err.println("Error: Expected 4 parameters, received " + args.length);
-    } else {
-      switch (method) {
-        case 1:
-          if (arguments[1] != null) {
-            char ch = arguments[1].charAt(0);
-            String str = arguments[0];
-            if (arguments[1].length() > 1) {
-              System.err.println("Error: Caesar ciphers require a one-character key.");
-            } // print error if argument has no key.
-            if (type == 1) {
-              output = CipherUtils.caesarEncrypt(str, ch);
-              pen.printf("%s\n", output);
-            } else if (type == 2) {
-              output = CipherUtils.caesarDecrypt(str, ch);
-              pen.printf("%s\n", output);
-            } else {
-              System.err.println("Error: No valid action specified. Legal values are"
-                                + " \"-encode\" and \"-decode\"");
-            } // if type is 1 or 2 call method.
-          } else if (arguments[1] == null) {
-            System.err.println("Error: Caesar ciphers require a one-character key.");
-          } // else/if
+      if (compareArg(args[i], "-vigenere", "-caesar", type)) {
+        type = args[i];
+      } else if (compareArg(args[i], "-encode", "-decode", action)) {
+        action = args[i];
+      } else if (target == null) {
+        if (CipherUtils.allLower(args[i])) {
+          target = args[i];
+        } else {
+          System.err.println("Error: Strings must be only lowercase letters.");
           break;
-        case 2:
-          if (arguments[1] != null) {
-            if (type == 1) {
-              output = CipherUtils.vigenereEncrypt(arguments[0], arguments[1]);
-              pen.printf("%s\n", output);
-            } else if (type == 2) {
-              output = CipherUtils.vigenereDecrypt(arguments[0], arguments[1]);
-              pen.printf("%s\n", output);
-            } else {
-              System.err.println("Error: No valid action specified. Legal values are"
-                                + " \"-encode\" and \"-decode\"");
-            } // if type is 1 or 2 call method.
-          } else if (arguments[1] == null) {
-            System.err.println("Error: Empty keys are not permitted");
-          } else {
-            System.err.println("Error: strings must be lowercase letters");
-          } // if arguments are null, print error.
+        } // if/else
+      } else if (key == null) {
+        if (CipherUtils.allLower(args[i])) {
+          key = args[i];
+        } else {
+          System.err.println("Error: Keys must be only lowercase letters.");
           break;
-        default:
-          System.err.println("Error: Expected 4 parameters, received " + args.length);
-      } // end switch statement to create & print ciphers.
-    } // end number of arguments check.
+        } // if/else
+      } // if
+    } // for
+
+    // Check for presence of cipher type and action specified in arguments.
+    if (action == null) {
+      System.err.println("Error: no valid action specified."
+                        + "Legal values are \'-encode\' and \'-decode\'");
+      return;
+    } else if (type == null) {
+      System.err.println("Error: no valid cipher specified."
+                        + "Legal values are \'-caesar\' and \'-vigenere\'");
+      return;
+    } else if (key == null) {
+      System.err.println("Error: Empty keys are not permitted.");
+      return;
+    } // if
+
+    // Check the caesar cipher has a one-character key.
+    if ((type.equals("-caesar")) && (key.length() > 1)) {
+      System.err.println("Error: Caesar ciphers require a one-character key.");
+      return;
+    } // if
+
+    // Print the cipher depending on its type & action.
+    switch (type) {
+      case "-vigenere":
+        if (action.equals("-decode")) {
+          pen.println(CipherUtils.vigenereDecrypt(target, key));
+        } else if (action.equals("-encode")) {
+          pen.println(CipherUtils.vigenereEncrypt(target, key));
+        } // if
+        break;
+      case "-caesar":
+        if (action.equals("-decode")) {
+          pen.println(CipherUtils.caesarDecrypt(target, key.charAt(0)));
+        } else if (action.equals("-encode")) {
+          pen.println(CipherUtils.caesarEncrypt(target, key.charAt(0)));
+        } // if
+        break;
+      default:
+        break;
+    } // switch
+    pen.close();
   } // main(String[])
 } // class Cipher
-
