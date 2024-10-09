@@ -1,9 +1,9 @@
 /*
  * CipherUtils.java
- * 
+ *
  * Author: Sara Jaljaa
  * Course: CSC-207-01
- * 
+ *
  */
 
 package edu.grinnell.csc207.util;
@@ -11,7 +11,7 @@ package edu.grinnell.csc207.util;
 /**
  * Helper functions to encrypt and decrypt with Caesar or
  * Vigenere ciphers.
- * 
+ *
  * @author Sara Jaljaa
  *
  */
@@ -20,12 +20,12 @@ public class CipherUtils {
   /**
    * The ASCII value of lowercase a.
    */
-  private static int alphStart = 97;
+  private static final int ALPH_START = 97;
 
-  /*
+  /**
    * The length of the alphabet.
    */
-  private static int numStart = 26;
+  private static final int NUM_START = 26;
 
   /**
    * Convert from ASCII to numerical alphabetical order.
@@ -35,7 +35,7 @@ public class CipherUtils {
    *         inclusive (0-25).
    */
   private static int letter2int(char letter) {
-    int charToI = ((int) letter - alphStart);
+    int charToI = ((int) letter - ALPH_START);
     return charToI;
   } // letter2int(char)
 
@@ -46,7 +46,7 @@ public class CipherUtils {
    * @return The integer i in ASCII form.
    */
   private static char int2letter(int i) {
-    return (char) (i + alphStart);
+    return (char) (i + ALPH_START);
   } // int2letter(int)
 
   /**
@@ -79,10 +79,10 @@ public class CipherUtils {
     int newVal = 0;
     for (int i = 0; i < str.length(); i++) {
       newVal = (letter2int(encString[i]) + letter2int(letter));
-      if (newVal >= numStart) {
-        newVal = newVal % numStart;
+      if (newVal >= NUM_START) {
+        newVal = newVal % NUM_START;
       } else if (newVal < 0) {
-        newVal = numStart + (newVal % numStart);
+        newVal = NUM_START + (newVal % NUM_START);
       } // if the letter is greater than 26, wrap around.
       encString[i] = int2letter(newVal);
     } return new String(encString);
@@ -100,10 +100,10 @@ public class CipherUtils {
     int newVal = 0;
     for (int i = 0; i < str.length(); i++) {
       newVal = (letter2int(decString[i]) - letter2int(letter));
-      if (newVal >= numStart) {
-        newVal = newVal % numStart;
+      if (newVal >= NUM_START) {
+        newVal = newVal % NUM_START;
       } else if (newVal < 0) {
-        newVal = numStart + (newVal % numStart);
+        newVal = NUM_START + (newVal % NUM_START);
       } // if value is greater than end of alphabet (26), wrap around.
       decString[i] = int2letter(newVal);
     } return new String(decString);
@@ -138,7 +138,7 @@ public class CipherUtils {
     } // return else branch if key is not less than str.
     return new String(max);
   } // equalString(String,String)
-  
+
   /**
    * Encrypt a string using the Vigenere cipher and a
    * key.
@@ -157,11 +157,11 @@ public class CipherUtils {
     char[] encKey = key.toCharArray();
     for (int i = 0; i < str.length(); i++) {
       newVal = (letter2int(encString[i]) + letter2int(encKey[i]));
-      if (newVal >= numStart) {
-        newVal = newVal % numStart;
+      if (newVal >= NUM_START) {
+        newVal = newVal % NUM_START;
       } else if (newVal < 0) {
-        newVal = numStart + (newVal % numStart);
-      } // if newly computed char is larger than 26, wrap around. 
+        newVal = NUM_START + (newVal % NUM_START);
+      } // if newly computed char is larger than 26, wrap around.
       encString[i] = int2letter(newVal);
     } // end for loop to encrypt string str.
     return new String(encString);
@@ -186,10 +186,10 @@ public class CipherUtils {
 
     for (int i = 0; i < str.length(); i++) {
       newVal = (letter2int(decString[i]) - letter2int(decKey[i]));
-      if (newVal >= numStart) {
-        newVal = newVal % numStart;
+      if (newVal >= NUM_START) {
+        newVal = newVal % NUM_START;
       } else if (newVal < 0) {
-        newVal = numStart + (newVal % numStart);
+        newVal = NUM_START + (newVal % NUM_START);
       } // if newly computed char is larger than 26, wrap around.
       decString[i] = int2letter(newVal);
     } return new String(decString);

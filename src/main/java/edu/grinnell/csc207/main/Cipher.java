@@ -1,9 +1,9 @@
 /*
  * Cipher.java
- * 
+ *
  * Author: Sara Jaljaa
  * Course: CSC-207-01
- * 
+ *
  */
 
 package edu.grinnell.csc207.main;
@@ -14,11 +14,16 @@ import java.io.PrintWriter;
 /**
  * Contains general and helper methods to encrypt and decrypt
  * with CipherUtils methods.
- * 
+ *
  * @author Sara Jaljaa
  *
  */
 public class Cipher {
+
+  /**
+   * Required argument length.
+   */
+  private static final int ARG = 4;
 
   /**
    * Determines if string is encoded or decoded.
@@ -99,7 +104,7 @@ public class Cipher {
       type = encOrDec(args[i], type, counter);
       arguments = getArgs(args, counter);
     } // end finding the arguments and assigning them values.
-    if (args.length < 4) {
+    if (args.length < ARG) {
       System.err.println("Error: Expected 4 parameters, received " + args.length);
     } else {
       switch (method) {
@@ -117,12 +122,13 @@ public class Cipher {
               output = CipherUtils.caesarDecrypt(str, ch);
               pen.printf("%s\n", output);
             } else {
-              System.err.println("Error: No valid action specified. Legal values are" 
+              System.err.println("Error: No valid action specified. Legal values are"
                                 + " \"-encode\" and \"-decode\"");
             } // if type is 1 or 2 call method.
           } else if (arguments[1] == null) {
             System.err.println("Error: Caesar ciphers require a one-character key.");
-          } break;
+          } // else/if
+          break;
         case 2:
           if (arguments[1] != null) {
             if (type == 1) {
@@ -136,13 +142,13 @@ public class Cipher {
                                 + " \"-encode\" and \"-decode\"");
             } // if type is 1 or 2 call method.
           } else if (arguments[1] == null) {
-              System.err.println("Error: Empty keys are not permitted");
+            System.err.println("Error: Empty keys are not permitted");
           } else {
             System.err.println("Error: strings must be lowercase letters");
           } // if arguments are null, print error.
           break;
-          default:
-            System.err.println("Error: Expected 4 parameters, received " + args.length);
+        default:
+          System.err.println("Error: Expected 4 parameters, received " + args.length);
       } // end switch statement to create & print ciphers.
     } // end number of arguments check.
   } // main(String[])
