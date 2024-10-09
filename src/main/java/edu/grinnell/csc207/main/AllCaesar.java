@@ -19,7 +19,8 @@ import java.io.PrintWriter;
  *
  */
 public class AllCaesar {
-/**
+
+  /**
    * Prints a caesar cipher.
    *
    * @param str Takes a string to encipher.
@@ -34,10 +35,11 @@ public class AllCaesar {
         pen.printf("n = %c: %s\n", ch, CipherUtils.caesarDecrypt(str, ch));
       } else {
         break;
-      } // end if the choice is encode or decode.
-    } // end for loop that repeats caesar cipher from a-z.
-  } // printCipher(String,PrintWriter,char)
-/**
+      } // if
+    } // for
+  } // printCipher(String, PrintWriter, char)
+
+  /**
    * Prints a caesar cipher from command line arguments.
    *
    * @param args Command line arguments, where args[0] is the string
@@ -45,12 +47,12 @@ public class AllCaesar {
    */
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
+
     String encode = "encode";
     String decode = "decode";
+
     if (args.length == 2) {
-      if (CipherUtils.allLower(args[1])) {
-        System.err.println("Error: String contains characters other than lowercase letters.");
-      } else if (encode.equals(args[0])) {
+      if (encode.equals(args[0])) {
         printCipher(args[1], pen, 'e');
       } else if (decode.equals(args[0])) {
         printCipher(args[1], pen, 'd');
@@ -58,10 +60,10 @@ public class AllCaesar {
         pen.close();
         System.err.printf("Error: Invalid option: %s. Valid options are"
                           + " encode\" or \"decode\".\n", args[0]);
-      } // if print statement.
+      } // if
     } else {
       System.err.println("Error: Incorrect number of parameters.");
-    } // if args length is not 2.
+    } // if
   } // main(String[])
 } // class main
 
