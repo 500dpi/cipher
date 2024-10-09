@@ -1,6 +1,10 @@
 **Author** 
 Sara Jaljaa
 
+**Change Log**
+Added headers to all files and re-implemented Cipher.java by
+generalizing methods. Also modified javadoc comments for clarity.
+
 **Description**
 A project that encrypts and decrypts single strings using
 Caesar and Vigenere ciphers.
