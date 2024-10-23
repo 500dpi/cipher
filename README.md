@@ -19,4 +19,4 @@ A project that encrypts and decrypts single strings using Caesar and Vigenere ci
 ---
 
 ### GitHub (this project)
-- [GitHub/500dpi](https://github.com/500dpi/cipher.git)
+- [500dpi/mp-encryption-maven](https://github.com/500dpi/mp-encryption-maven.git)
