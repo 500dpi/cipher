@@ -8,6 +8,8 @@
 ### Author
 - Sara Jaljaa
 
+---
+
 ### Overview
 A project that encrypts and decrypts single strings using Caesar and Vigenere ciphers.
 
@@ -19,4 +21,4 @@ A project that encrypts and decrypts single strings using Caesar and Vigenere ci
 ---
 
 ### GitHub (this project)
-- Github: <https://github.com/500dpi/cipher.git>
+- [GitHub/500dpi](https://github.com/500dpi/cipher.git)
