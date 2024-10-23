@@ -1,19 +1,22 @@
-**Author** 
-Sara Jaljaa
+### Change Log
+- Added headers to all files
+- Generalized methods in Cipher.java
+- Modified javadoc comments for clarity
 
-**Change Log**
-Added headers to all files and re-implemented Cipher.java by
-generalizing methods. Also modified javadoc comments for clarity.
+## Mini-Project #1: Classical Encryption
 
-**Description**
-A project that encrypts and decrypts single strings using
-Caesar and Vigenere ciphers.
+### Author
+- Sara Jaljaa
 
-**Acknowledgements**
-1) https://rebelsky.cs.grinnell.edu/Courses/CSC207/2024Fa/readings/maven.html : helped as reference for Maven commands
+### Overview
+A project that encrypts and decrypts single strings using Caesar and Vigenere ciphers.
 
-2) https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html : used for str.equals() to compare strings
-and also look at string documentation.
+---
 
-**Github Link**
-Github: <https://github.com/500dpi/cipher.git>
+## Acknowledgements
+- [String Class Javadocs](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html)
+
+---
+
+### GitHub (this project)
+- Github: <https://github.com/500dpi/cipher.git>
