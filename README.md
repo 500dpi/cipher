@@ -13,7 +13,7 @@ A project that encrypts and decrypts single strings using Caesar and Vigenere ci
 
 ---
 
-## Acknowledgements
+### Acknowledgements
 - [String Class Javadocs](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html)
 
 ---
