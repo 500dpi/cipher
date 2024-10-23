@@ -8,8 +8,6 @@
 ### Author
 - Sara Jaljaa
 
----
-
 ### Overview
 A project that encrypts and decrypts single strings using Caesar and Vigenere ciphers.
 
