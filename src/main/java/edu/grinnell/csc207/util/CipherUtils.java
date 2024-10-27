@@ -1,197 +1,216 @@
-/*
- * CipherUtils.java
- *
- * Author: Sara Jaljaa
- * Course: CSC-207-01
- *
- */
-
 package edu.grinnell.csc207.util;
 
+import java.util.Arrays;
+
 /**
- * Helper functions to encrypt and decrypt with Caesar or
- * Vigenere ciphers.
+ * Encrypts or decrypts Caesar and Vigenere ciphers.
  *
  * @author Sara Jaljaa
- *
+ * @course CSC-207-01
  */
 public class CipherUtils {
 
-  /**
-   * The ASCII value of lowercase a.
-   */
-  private static final int ALPH_START = 97;
+  // +-----------+---------------------------------------------------
+  // | Constants |
+  // +-----------+
 
   /**
    * The length of the alphabet.
    */
-  private static final int NUM_START = 26;
+  private static final int ALPH_SIZE = 26;
+
+  // +----------------+----------------------------------------------
+  // | Helper Methods |
+  // +----------------+
 
   /**
-   * Convert from ASCII to numerical alphabetical order.
+   * Convert from ASCII value to numerical alphabetical order.
    *
-   * @param letter The letter in ASCII form.
-   * @return The letter calibrated to its alphabetical position,
-   *         inclusive (0-25).
+   * @param letter
+   *    The letter in ASCII form.
+   *
+   * @return
+   *    The letter calibrated to its alphabetical position from
+   *    0-26 (exclusive).
    */
   private static int letter2int(char letter) {
-    int charToI = ((int) letter - ALPH_START);
-    return charToI;
+    return (int) (letter - 'a');
   } // letter2int(char)
 
   /**
    * Convert from numerical alphabetical order to ASCII value.
    *
-   * @param i The integer i in alphabetical numerical form.
-   * @return The integer i in ASCII form.
+   * @param i
+   *    An integer representing the letter's index in the alphabet.
+   * @return
+   *    An integer in ASCII form.
    */
   private static char int2letter(int i) {
-    return (char) (i + ALPH_START);
+    return (char) (i + (int) 'a');
   } // int2letter(int)
 
   /**
    * Check if all the characters in a string are lowercase.
    *
-   * @param arg The string key for the Vigenere cipher.
-   * @return A boolean that indicates if all the characters are lowercase.
+   * @param arg
+   *    The key for a Vigenere cipher.
+   * @return
+   *    True or false if all the characters in the string are lowercase.
    */
-  public static boolean allLower(String arg) {
+  public static boolean lowercaseCheck(String arg) {
     boolean bool = false;
     for (int i = 0; i < arg.length(); i++) {
-      if (arg.charAt(i) >= 'a' && arg.charAt(i) <= 'z') {
+      if ((arg.charAt(i) >= 'a') && (arg.charAt(i) <= 'z')) {
         bool = true;
       } else {
-        bool = false;
-        break;
-      } // if the character is not lowercase.
-    } return bool;
-  } // allLower(String)
+        return false;
+      } // elif
+    } // for
+    return bool;
+  } // lowercaseCheck(String)
 
   /**
-   * Encrypt a string via Caesar cipher.
+   * Wraps the index if it is out of the alphabetical
+   * index bounds 0-26 (exclusive).
    *
-   * @param str The string to encrypt with the Caesar cipher.
-   * @param letter The letter in ASCII form character.
-   * @return A new string that has been encrypted with the letter.
+   * @param index
+   *    The index of the character in the alphabet.
+   * @return
+   *    The (modified) index.
+   */
+  public static int wrap(int index) {
+    if (index >= ALPH_SIZE) {
+      index = index % ALPH_SIZE;
+    } else if (index < 0) {
+      index = ALPH_SIZE + (index % ALPH_SIZE);
+    } // elif
+    return index;
+  } // wrap(int)
+
+  /**
+   * Expands a key string if it is shorter than the message to
+   * (en)/(de)cipher.
+   *
+   * @param key
+   *    The key string to extend.
+   * @param str
+   *    The plaintext message.
+   * @return
+   *    A key string that is >= the message length.
+   */
+  public static String extend(String key, String str) {
+    // If the key is longer than the message, return the key
+    if (!(key.length() < str.length())) {
+      return key;
+    } // if
+
+    // Iterate over the length of the string with the key's
+    // values, repeating the key when the end is reached
+    char[] extended = str.toCharArray();
+    for (int i = 0, j = 0; i < str.length(); i++, j++) {
+      if (j >= key.length()) {
+        j = 0;
+      } // if
+      extended[i] = key.charAt(j);
+    } // for
+    return new String(extended);
+  } // extend(String, String)
+
+  /**
+   * Generalized encryption/decryption with strings.
+   *
+   * @param str
+   *    The plaintext message.
+   * @param key
+   *    The key to en/decode with.
+   * @param action
+   *    The action of the cipher (encode/decode).
+   *
+   * @return
+   *    The ciphertext message.
+   */
+  public static String cipher(String str, String key, char action) {
+    char[] cipher = new char[str.length()];
+    int index = 0;
+
+    for (int i = 0; i < str.length(); i++) {
+      if (action == 'e') {
+        index = letter2int(str.charAt(i)) + letter2int(key.charAt(i));
+      } else if (action == 'd') {
+        index = letter2int(str.charAt(i)) - letter2int(key.charAt(i));
+      } // elif
+      cipher[i] = int2letter(wrap(index));
+    } // for
+    return new String(cipher);
+  } // cipher(String, String, char)
+
+  // +----------------+----------------------------------------------
+  // | Caesar Methods |
+  // +----------------+
+
+  /**
+   * Encrypt a Caesar cipher.
+   *
+   * @param str
+   *    The string to encrypt.
+   * @param letter
+   *    The letter to encrypt with.
+   * @return
+   *    An encrypted Caesar cipher.
    */
   public static String caesarEncrypt(String str, char letter) {
-    char[] encString = str.toCharArray();
-    int newVal = 0;
-    for (int i = 0; i < str.length(); i++) {
-      newVal = (letter2int(encString[i]) + letter2int(letter));
-      if (newVal >= NUM_START) {
-        newVal = newVal % NUM_START;
-      } else if (newVal < 0) {
-        newVal = NUM_START + (newVal % NUM_START);
-      } // if the letter is greater than 26, wrap around.
-      encString[i] = int2letter(newVal);
-    } return new String(encString);
-  } // caesarEncrypt(str,letter)
+    char[] letters = new char[str.length()];
+    Arrays.fill(letters, letter);
+    return cipher(str, new String(letters), 'e');
+  } // caesarEncrypt(String, char)
 
   /**
-   * Decrypt a string via Caesar cipher.
+   * Decrypt a Caesar cipher.
    *
-   * @param str The string to decrypt with the Caesar cipher.
-   * @param letter The letter in ASCII form character.
-   * @return A new string that has been decrypted with the letter.
+   * @param str
+   *    The string to decrypt.
+   * @param letter
+   *    The letter to decrypt with.
+   * @return
+   *    A decrypted Caesar cipher.
    */
   public static String caesarDecrypt(String str, char letter) {
-    char[] decString = str.toCharArray();
-    int newVal = 0;
-    for (int i = 0; i < str.length(); i++) {
-      newVal = (letter2int(decString[i]) - letter2int(letter));
-      if (newVal >= NUM_START) {
-        newVal = newVal % NUM_START;
-      } else if (newVal < 0) {
-        newVal = NUM_START + (newVal % NUM_START);
-      } // if value is greater than end of alphabet (26), wrap around.
-      decString[i] = int2letter(newVal);
-    } return new String(decString);
-  } // caesarDecrypt(String,char)
+    char[] letters = new char[str.length()];
+    Arrays.fill(letters, letter);
+    return cipher(str, new String(letters), 'd');
+  } // caesarDecrypt(String, char)
+
+  // +------------------+--------------------------------------------
+  // | Vigenere Methods |
+  // +------------------+
 
   /**
-   * Check if the key is shorter than the string for a Vigenere
-   * cipher; if true, expand the length by repeating it.
+   * Encrypt a Vigenere cipher.
    *
-   * @param str The string to compare against.
-   * @param key The key string to check.
-   * @return A new string that has either been extended
-   * or remained the same.
-   */
-  public static String equalString(String str, String key) {
-    char[] max = new char[str.length()];
-    char[] keyArr = key.toCharArray();
-
-    if (key.length() < str.length()) {
-      for (int i = 0, j = 0; i < str.length(); i++, j++) {
-        if (j < key.length()) {
-          max[i] = keyArr[j];
-        } else if (j >= key.length()) {
-          j = 0;
-          max[i] = keyArr[j];
-        } // if key length < str length, adjust key values if shorter than string str.
-      } // end for loop to repeat key.
-    } else {
-      for (int i = 0; i < str.length(); i++) {
-        max[i] = keyArr[i];
-      } // for the entir str length, repeat the key so that it is the same size array.
-    } // return else branch if key is not less than str.
-    return new String(max);
-  } // equalString(String,String)
-
-  /**
-   * Encrypt a string using the Vigenere cipher and a
-   * key.
-   *
-   * @param str The string to be encrypted.
-   * @param key The key string to encrypt with.
-   * @return A new Vigenere-encrypted string.
+   * @param str
+   *    The string to encrypt.
+   * @param key
+   *    The string to encrypt with.
+   * @return
+   *    An encrypted Vigenere cipher.
    */
   public static String vigenereEncrypt(String str, String key) {
-    char[] encString = str.toCharArray();
-    int newVal = 0;
-
-    if (str.length() > key.length()) {
-      key = equalString(str, key);
-    } // end check is key is smaller.
-    char[] encKey = key.toCharArray();
-    for (int i = 0; i < str.length(); i++) {
-      newVal = (letter2int(encString[i]) + letter2int(encKey[i]));
-      if (newVal >= NUM_START) {
-        newVal = newVal % NUM_START;
-      } else if (newVal < 0) {
-        newVal = NUM_START + (newVal % NUM_START);
-      } // if newly computed char is larger than 26, wrap around.
-      encString[i] = int2letter(newVal);
-    } // end for loop to encrypt string str.
-    return new String(encString);
-  } // vigenereEncrypt(String,String)
+    key = extend(key, str);
+    return cipher(str, key, 'e');
+  } // vigenereEncrypt(String, String)
 
   /**
-   * Decrypt a string using the Vigenere cipher and a
-   * key.
+   * Decrypt a Vigenere cipher.
    *
-   * @param str The string to be decrypted.
-   * @param key The key string to decrypt with.
-   * @return A new Vigenere-decrypted string.
+   * @param str
+   *    The string to decrypt.
+   * @param key
+   *    The string to decrypt with.
+   * @return
+   *    A decrypted Vigenere cipher.
    */
   public static String vigenereDecrypt(String str, String key) {
-    char[] decString = str.toCharArray();
-    int newVal = 0;
-
-    if (str.length() > key.length()) {
-      key = equalString(str, key);
-    } // if str is larger, use equalString to loop key to a larger array.
-    char[] decKey = key.toCharArray();
-
-    for (int i = 0; i < str.length(); i++) {
-      newVal = (letter2int(decString[i]) - letter2int(decKey[i]));
-      if (newVal >= NUM_START) {
-        newVal = newVal % NUM_START;
-      } else if (newVal < 0) {
-        newVal = NUM_START + (newVal % NUM_START);
-      } // if newly computed char is larger than 26, wrap around.
-      decString[i] = int2letter(newVal);
-    } return new String(decString);
-  } // vigenereDecrypt(String,String)
+    key = extend(key, str);
+    return cipher(str, key, 'd');
+  } // vigenereDecrypt(String, String)
 } // class CipherUtils
