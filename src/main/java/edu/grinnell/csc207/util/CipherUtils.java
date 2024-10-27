@@ -50,26 +50,6 @@ public class CipherUtils {
   } // int2letter(int)
 
   /**
-   * Check if all the characters in a string are lowercase.
-   *
-   * @param arg
-   *    The key for a Vigenere cipher.
-   * @return
-   *    True or false if all the characters in the string are lowercase.
-   */
-  public static boolean lowercaseCheck(String arg) {
-    boolean bool = false;
-    for (int i = 0; i < arg.length(); i++) {
-      if ((arg.charAt(i) >= 'a') && (arg.charAt(i) <= 'z')) {
-        bool = true;
-      } else {
-        return false;
-      } // elif
-    } // for
-    return bool;
-  } // lowercaseCheck(String)
-
-  /**
    * Wraps the index if it is out of the alphabetical
    * index bounds 0-26 (exclusive).
    *
@@ -78,7 +58,7 @@ public class CipherUtils {
    * @return
    *    The (modified) index.
    */
-  public static int wrap(int index) {
+  private static int wrap(int index) {
     if (index >= ALPH_SIZE) {
       index = index % ALPH_SIZE;
     } else if (index < 0) {
@@ -98,7 +78,7 @@ public class CipherUtils {
    * @return
    *    A key string that is >= the message length.
    */
-  public static String extend(String key, String str) {
+  private static String extend(String key, String str) {
     // If the key is longer than the message, return the key
     if (!(key.length() < str.length())) {
       return key;
@@ -129,7 +109,7 @@ public class CipherUtils {
    * @return
    *    The ciphertext message.
    */
-  public static String cipher(String str, String key, char action) {
+  private static String cipher(String str, String key, char action) {
     char[] cipher = new char[str.length()];
     int index = 0;
 
@@ -143,6 +123,26 @@ public class CipherUtils {
     } // for
     return new String(cipher);
   } // cipher(String, String, char)
+
+  /**
+   * Check if all the characters in a string are lowercase.
+   *
+   * @param arg
+   *    The key for a Vigenere cipher.
+   * @return
+   *    True or false if all the characters in the string are lowercase.
+   */
+  public static boolean lowercaseCheck(String arg) {
+    boolean bool = false;
+    for (int i = 0; i < arg.length(); i++) {
+      if ((arg.charAt(i) >= 'a') && (arg.charAt(i) <= 'z')) {
+        bool = true;
+      } else {
+        return false;
+      } // elif
+    } // for
+    return bool;
+  } // lowercaseCheck(String)
 
   // +----------------+----------------------------------------------
   // | Caesar Methods |
