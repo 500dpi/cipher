@@ -17,15 +17,16 @@ import org.junit.jupiter.api.Test;
  * Tests of the various classes for MP01.
  */
 public class TestMP01 {
+
   // +--------------+------------------------------------------------
   // | Design notes |
   // +--------------+
 
   /*
-   Since some of the project goals are classes with main methods,
-   we have a variety of utility classes that allow us to capture
-   System.in and System.out. We then call the main method and check
-   the results. 
+  Since some of the project goals are classes with main methods,
+  we have a variety of utility classes that allow us to capture
+  System.in and System.out. We then call the main method and check
+  the results.
    */
 
   // +-----------+---------------------------------------------------
