@@ -1,7 +1,3 @@
-### Change Log
-- Generalized & added more helper methods in Cipher and CipherUtils to cut redundancy
-- Modified javadoc comments for clarity in Cipher & CipherUtils
-
 ## Mini-Project #1: Classical Encryption
 
 ### Author
