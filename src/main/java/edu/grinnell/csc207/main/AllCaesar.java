@@ -8,7 +8,6 @@ import java.io.PrintWriter;
  * decrypted Caesar cipher.
  *
  * @author Sara Jaljaa
- * @course CSC-207-01
  */
 public class AllCaesar {
 

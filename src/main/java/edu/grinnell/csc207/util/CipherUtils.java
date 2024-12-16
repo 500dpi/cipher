@@ -6,7 +6,6 @@ import java.util.Arrays;
  * Encrypts or decrypts Caesar and Vigenere ciphers.
  *
  * @author Sara Jaljaa
- * @course CSC-207-01
  */
 public class CipherUtils {
 

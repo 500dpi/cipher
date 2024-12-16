@@ -8,7 +8,6 @@ import java.io.PrintWriter;
  * the specified input values.
  *
  * @author Sara Jaljaa
- * @course CSC-207-01
  */
 public class Cipher {
 
